@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://cafeandrestaurantpool-arch.github.io/allonsbien-nara/sitemap.xml
