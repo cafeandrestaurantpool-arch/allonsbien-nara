@@ -65,8 +65,8 @@ def main():
                 {'@type': 'ListItem', 'position': 3, 'name': p['title'], 'item': BASE + path}]},
               {'@context': 'https://schema.org', '@type': 'BlogPosting', 'headline': p['title'], 'description': p['description'],
                'datePublished': p['date'], 'dateModified': p['date'], 'inLanguage': 'ja', 'keywords': ','.join(p['keywords']),
-               'mainEntityOfPage': BASE + path, 'author': {'@type': 'Organization', 'name': 'Cafe & Bake Allons Bien'},
-               'publisher': {'@type': 'Organization', 'name': 'Cafe & Bake Allons Bien'}}]
+               'mainEntityOfPage': BASE + path, 'image': BASE + 'assets/img/canele2.jpg', 'author': {'@type': 'Organization', 'name': 'Cafe & Bake Allons Bien'},
+               'publisher': {'@type': 'Organization', 'name': 'Cafe & Bake Allons Bien', 'logo': {'@type': 'ImageObject', 'url': BASE + 'assets/img/logo.jpg'}}}]
         out = (tpl.replace('{{TITLE}}', H.escape(p['title'])).replace('{{DESC}}', H.escape(p['description']))
                .replace('{{PATH}}', path).replace('{{KEYWORDS}}', H.escape(','.join(p['keywords'])))
                .replace('<script type="application/ld+json">{"{{LD}}": 1}</script>', ''.join('<script type="application/ld+json">' + json.dumps(o, ensure_ascii=False) + '</script>' for o in ld))
