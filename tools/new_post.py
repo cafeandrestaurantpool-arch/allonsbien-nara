@@ -70,7 +70,8 @@ def main():
         out = (tpl.replace('{{TITLE}}', H.escape(p['title'])).replace('{{DESC}}', H.escape(p['description']))
                .replace('{{PATH}}', path).replace('{{KEYWORDS}}', H.escape(','.join(p['keywords'])))
                .replace('<script type="application/ld+json">{"{{LD}}": 1}</script>', ''.join('<script type="application/ld+json">' + json.dumps(o, ensure_ascii=False) + '</script>' for o in ld))
-               .replace('<!--ARTICLE-->', article_html(p)))
+               .replace('<!--ARTICLE-->', article_html(p))
+               .replace('<meta name="robots" content="noindex,nofollow">', '<meta name="robots" content="index,follow">'))
         open(os.path.join(ROOT, path), 'w', encoding='utf-8').write(out)
 
     def relist(fname, items, tweak=None):
