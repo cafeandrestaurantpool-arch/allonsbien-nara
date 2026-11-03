@@ -1,0 +1,20 @@
+# main に push されたら、GitHub Pages の公開を待ってから、更新したページを IndexNow で検索エンジン（Bing など）に知らせる。
+# サイトの公開そのものは、これまでどおり GitHub Pages（ブランチから自動）が行う。このファイルは知らせるだけ。
+name: Notify search engines (IndexNow)
+on:
+  push:
+    branches: [main]
+    paths: ['**.html', 'sitemap.xml']
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Wait for GitHub Pages, then notify
+        run: |
+          sleep 120
+          mkdir _tmp && cp sitemap.xml _tmp/
+          python3 tools/indexnow.py _tmp https://cafeandrestaurantpool-arch.github.io/allonsbien-nara/ || true

@@ -16,3 +16,7 @@
 
 ## 修正のしかた
 Claude に「〇〇を直して」と頼めば、このリポジトリを直して公開まで行います。
+
+## IndexNow（Bing などに新しいページを自動で知らせる）
+- 公開のあと、GitHub Actions が `tools/indexnow.py` を実行し、更新日が直近3日のページだけを送る。鍵は `f5583eafcedf018d704433ef65b0ce92`（鍵ファイル `f5583eafcedf018d704433ef65b0ce92.txt` はリポジトリ直下。消さない）。
+- `tools/indexnow.py` と、Actions の IndexNow の手順は消さない。Google は IndexNow を使わないので、Google にはサイトマップ（Search Console）で知らせる。
