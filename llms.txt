@@ -1,0 +1,31 @@
+# Cafe & Bake Allons Bien（アロンビアン）
+
+> 奈良市船橋町（船橋商店街）の、ならまちの焼き菓子店。70年近く町の薬局だった建物を、看板や薬棚を残して2022年に焼き菓子店にしました。フランスの伝統的な焼き菓子（カヌレ、ディアマン、ガレットブルトンヌなど）を、基本に忠実に、シンプルに作っています。現在、店内での飲食営業はしておらず、お菓子は楽天市場のオンラインショップから全国へお届けしています。
+
+- 店名の意味：Allons Bien はフランス語で「さあ、元気になろう」
+- 奈良の素材：奈良県産（月ヶ瀬）の大和抹茶、奈良生まれのいちご「古都華」
+- 雑誌SAVVY 2023年3月号・2024年3月号に掲載
+- 送料：一部商品を除き送料無料
+- 購入：楽天市場 https://www.rakuten.co.jp/allonsbien/
+- Instagram：https://www.instagram.com/cafeandbake_allonsbien/
+- 姉妹店：CAFE & RESTAURANT POOL（奈良市船橋町のカジュアルフレンチ） https://cafeandrestaurantpool-arch.github.io/pool-site/
+
+## 商品
+- [カヌレ](https://cafeandrestaurantpool-arch.github.io/allonsbien-nara/canele.html)：プレーン（ラム・バニラ）・大和抹茶・チョコの3つの味。食べ比べセットあり
+- [チョコカヌレ](https://cafeandrestaurantpool-arch.github.io/allonsbien-nara/choco.html)
+- [大和抹茶のお菓子](https://cafeandrestaurantpool-arch.github.io/allonsbien-nara/matcha.html)：抹茶カヌレ、抹茶ディアマン、抹茶のパウンドケーキ
+- [古都華いちごのパウンドケーキ](https://cafeandrestaurantpool-arch.github.io/allonsbien-nara/kotoka.html)
+- [クッキー](https://cafeandrestaurantpool-arch.github.io/allonsbien-nara/cookie.html)：ディアマン、ガレットブルトンヌ、ブール・ド・ネージュ、アーモンドロッシェ
+- [焼き菓子](https://cafeandrestaurantpool-arch.github.io/allonsbien-nara/bake.html)：カヌレ・クッキー・パウンドケーキ
+- [ギフト](https://cafeandrestaurantpool-arch.github.io/allonsbien-nara/gift.html)：クッキー缶、詰め合わせ
+- [人気の焼き菓子](https://cafeandrestaurantpool-arch.github.io/allonsbien-nara/popular.html)
+- [はじめての方へ](https://cafeandrestaurantpool-arch.github.io/allonsbien-nara/first.html)
+- [奈良のお土産に](https://cafeandrestaurantpool-arch.github.io/allonsbien-nara/nara.html)
+- [オリジナルTシャツ](https://cafeandrestaurantpool-arch.github.io/allonsbien-nara/other.html)
+
+## よみもの
+- [よみもの一覧](https://cafeandrestaurantpool-arch.github.io/allonsbien-nara/journal.html)：焼き菓子の由来・食べ方、お店のこと
+- [カヌレとは](https://cafeandrestaurantpool-arch.github.io/allonsbien-nara/journal-what-is-canele.html)
+- [元薬局の焼き菓子店](https://cafeandrestaurantpool-arch.github.io/allonsbien-nara/journal-old-pharmacy-bake-shop-nara.html)
+- [店名 Allons Bien の意味](https://cafeandrestaurantpool-arch.github.io/allonsbien-nara/journal-allons-bien-meaning-shop-name-nara.html)
+- [オンラインショップのお届け](https://cafeandrestaurantpool-arch.github.io/allonsbien-nara/journal-online-shop-baked-sweets-delivery-nara.html)
