@@ -20,3 +20,8 @@ Claude に「〇〇を直して」と頼めば、このリポジトリを直し�
 ## IndexNow（Bing などに新しいページを自動で知らせる）
 - 公開のあと、GitHub Actions が `tools/indexnow.py` を実行し、更新日が直近3日のページだけを送る。鍵は `f5583eafcedf018d704433ef65b0ce92`（鍵ファイル `f5583eafcedf018d704433ef65b0ce92.txt` はリポジトリ直下。消さない）。
 - `tools/indexnow.py` と、Actions の IndexNow の手順は消さない。Google は IndexNow を使わないので、Google にはサイトマップ（Search Console）で知らせる。
+
+## Google Analytics 4
+- 測定ID `G-MOR6JDYLBK`（POOL・ウェディングと同じプロパティ。ページのアドレスで3サイトを見分ける）。全ページの </head> の直前に入っている。記事のひな形 `tools/post_template.html` にも入っているので、新しい記事にも自動で入る。
+- 楽天市場へのクリックは shop_click、Instagram は instagram_click、姉妹店POOLへは sister_click として記録する。
+- ページを手で追加したときは `python3 -c "import sys;sys.path.insert(0,'tools');import analytics;analytics.add_ga4('.')"` を実行する（二重には入らない）。
