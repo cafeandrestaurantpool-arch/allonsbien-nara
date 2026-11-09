@@ -1,5 +1,5 @@
 """新しい記事を追加して、よみもの一覧・トップ・サイトマップを更新する。
-使い方: python3 tools/new_post.py post.json
+使い方: python3 tools/new_post.py post.json（全記事を作り直すだけなら python3 tools/new_post.py --rebuild）
 post.json は次の形（data_posts.json の1件と同じ）:
 {"id":"p20261023","date":"2026-10-23","category":"焼き菓子について","title":"...","slug":"english-slug",
  "keywords":["...",...],"description":"80〜120字","lead":"...","body":["段落", "## 小見出し", "段落", ...]}
@@ -21,7 +21,27 @@ def post_href(p):
     return f'journal-{p["slug"]}.html'
 
 
-def article_html(p):
+def related(p, posts, n=3):
+    """関連するよみもの：キーワードが重なる記事を優先し、同じ分類・日付の近さで並べる（自分は除く）。"""
+    kw = set(p.get('keywords', []))
+    words = set(re.findall(r'[一-龥ァ-ヶー]{2,}', p['title']))
+    def score(q):
+        k = len(kw & set(q.get('keywords', []))) * 3
+        k += len(words & set(re.findall(r'[一-龥ァ-ヶー]{2,}', q['title'])))
+        k += 1 if q['category'] == p['category'] else 0
+        return (k, q['date'])
+    return sorted((q for q in posts if q['id'] != p['id']), key=score, reverse=True)[:n]
+
+
+def related_html(p, posts):
+    items = related(p, posts)
+    if not items:
+        return ''
+    lis = ''.join(f'<li style="margin: 0; padding: 14px 0; border-bottom: 1px solid #E4DED4"><a href="{post_href(q)}" style="color: #2A2623; text-decoration: none; font-size: 15px; line-height: 1.7"><span style="display: block; font-size: 12px; color: #8A6D10">{q["category"]}</span>{H.escape(q["title"])}</a></li>' for q in items)
+    return f'<nav aria-label="関連するよみもの" style="margin-top: 40px"><h2 style="margin: 0 0 4px; font-size: 16px; font-weight: 700; letter-spacing: 0.06em">関連するよみもの</h2><ul style="list-style: none; margin: 0; padding: 0">{lis}</ul></nav>'
+
+
+def article_html(p, posts=()):
     date = p['date'].replace('-', '.')
     body = ''
     for para in p['body']:
@@ -39,23 +59,14 @@ def article_html(p):
 <p style="margin: 0; font-size: 14px">お店の焼き菓子は、オンラインショップから全国へお届けしています（一部商品を除き送料無料）。</p>
 <a href="{SHOP}" rel="noopener" style="display: inline-flex; align-items: center; gap: 8px; min-height: 46px; padding: 0 22px; border-radius: 999px; background: #2A2623; color: #F6F3EE; text-decoration: none; font-size: 13px">楽天で買う →</a>
 </div>
+{related_html(p, posts)}
 <p style="margin: 32px 0 0"><a href="journal.html" style="font-size: 13px; letter-spacing: 0.08em">← よみもの一覧へ</a></p>
 </article>'''
 
 
 
 
-def main():
-    new = json.load(open(sys.argv[1], encoding='utf-8'))
-    for k in ('id', 'date', 'category', 'title', 'slug', 'keywords', 'description', 'lead', 'body'):
-        assert k in new, 'missing ' + k
-    assert re.fullmatch(r'[a-z0-9-]+', new['slug']), 'slug は英小文字・数字・ハイフンのみ'
-    dp = os.path.join(ROOT, 'data_posts.json')
-    posts = json.load(open(dp, encoding='utf-8'))
-    posts = [p for p in posts if p['id'] != new['id']]
-    posts.insert(0, new)
-    posts.sort(key=lambda p: p['date'], reverse=True)
-    json.dump(posts, open(dp, 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
+def render_posts(posts):
     tpl = open(os.path.join(ROOT, 'tools', 'post_template.html'), encoding='utf-8').read()
     for p in posts:
         path = post_href(p)
@@ -70,9 +81,28 @@ def main():
         out = (tpl.replace('{{TITLE}}', H.escape(p['title'])).replace('{{DESC}}', H.escape(p['description']))
                .replace('{{PATH}}', path).replace('{{KEYWORDS}}', H.escape(','.join(p['keywords'])))
                .replace('<script type="application/ld+json">{"{{LD}}": 1}</script>', ''.join('<script type="application/ld+json">' + json.dumps(o, ensure_ascii=False) + '</script>' for o in ld))
-               .replace('<!--ARTICLE-->', article_html(p))
+               .replace('<!--ARTICLE-->', article_html(p, posts))
                .replace('<meta name="robots" content="noindex,nofollow">', '<meta name="robots" content="index,follow">'))
         open(os.path.join(ROOT, path), 'w', encoding='utf-8').write(out)
+
+
+def main():
+    if sys.argv[1] == '--rebuild':  # 記事を追加せず、全記事を作り直す（関連記事の更新など）
+        posts = json.load(open(os.path.join(ROOT, 'data_posts.json'), encoding='utf-8'))
+        render_posts(posts)
+        print('ok rebuild', len(posts), 'posts')
+        return
+    new = json.load(open(sys.argv[1], encoding='utf-8'))
+    for k in ('id', 'date', 'category', 'title', 'slug', 'keywords', 'description', 'lead', 'body'):
+        assert k in new, 'missing ' + k
+    assert re.fullmatch(r'[a-z0-9-]+', new['slug']), 'slug は英小文字・数字・ハイフンのみ'
+    dp = os.path.join(ROOT, 'data_posts.json')
+    posts = json.load(open(dp, encoding='utf-8'))
+    posts = [p for p in posts if p['id'] != new['id']]
+    posts.insert(0, new)
+    posts.sort(key=lambda p: p['date'], reverse=True)
+    json.dump(posts, open(dp, 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
+    render_posts(posts)
 
     def relist(fname, items, tweak=None):
         fp = os.path.join(ROOT, fname)
